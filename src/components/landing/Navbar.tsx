@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/instaflow-logo.png";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -35,9 +36,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between h-16 md:h-20">
         <a href="#" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center shadow-glow group-hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] transition-shadow duration-300">
-            <span className="text-primary-foreground font-display font-bold text-sm">IF</span>
-          </div>
+          <img src={logo} alt="InstaFlow" className="w-9 h-9 rounded-xl shadow-glow group-hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] transition-shadow duration-300" />
           <span className="font-display font-bold text-lg text-foreground">InstaFlow</span>
         </a>
 

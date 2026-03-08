@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import logo from "@/assets/instaflow-logo.png";
 
 const Footer = () => {
   return (
@@ -13,9 +14,7 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center shadow-glow">
-                <span className="text-primary-foreground font-display font-bold text-sm">IF</span>
-              </div>
+              <img src={logo} alt="InstaFlow" className="w-9 h-9 rounded-xl shadow-glow" />
               <span className="font-display font-bold text-lg text-foreground">InstaFlow</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">A plataforma omnicanal completa para escalar seu negócio.</p>
