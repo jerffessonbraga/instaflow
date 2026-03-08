@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
@@ -39,17 +39,28 @@ const cardVariants = {
 
 const Testimonials = () => {
   return (
-    <section id="depoimentos" className="py-24 bg-muted/50">
-      <div className="container mx-auto">
+    <section id="depoimentos" className="py-28 relative overflow-hidden">
+      <div className="absolute inset-0 grid-pattern opacity-20" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--secondary)/0.06),transparent_60%)]" />
+      
+      <div className="container mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block text-sm font-medium text-primary mb-4 px-4 py-1.5 rounded-full glass"
+          >
+            Depoimentos
+          </motion.span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
             O que nossos{" "}
-            <span className="gradient-text">clientes dizem</span>
+            <span className="gradient-text text-glow">clientes dizem</span>
           </h2>
         </motion.div>
 
@@ -58,15 +69,16 @@ const Testimonials = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+          className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto"
         >
           {testimonials.map((t) => (
             <motion.div
               key={t.name}
               variants={cardVariants}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className="bg-card rounded-2xl p-6 shadow-card border border-border hover:shadow-card-hover transition-shadow duration-300"
+              className="glass rounded-2xl p-6 hover:border-glow transition-all duration-300 relative"
             >
+              <Quote size={32} className="text-primary/10 absolute top-4 right-4" />
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, j) => (
                   <motion.div
@@ -80,9 +92,9 @@ const Testimonials = () => {
                   </motion.div>
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground mb-6 leading-relaxed">"{t.text}"</p>
+              <p className="text-sm text-muted-foreground mb-6 leading-relaxed relative z-10">"{t.text}"</p>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-display font-bold text-sm">
+                <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-display font-bold text-sm shadow-glow">
                   {t.avatar}
                 </div>
                 <div>
