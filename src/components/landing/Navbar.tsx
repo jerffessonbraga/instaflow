@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -28,33 +28,48 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-card/80 backdrop-blur-xl shadow-card border-b border-border" : "bg-transparent"
+      transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled ? "glass-strong shadow-card" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between h-16 md:h-20">
-        <a href="#" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+        <a href="#" className="flex items-center gap-2 group">
+          <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center shadow-glow group-hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] transition-shadow duration-300">
             <span className="text-primary-foreground font-display font-bold text-sm">O</span>
           </div>
           <span className="font-display font-bold text-lg text-foreground">OmniChannel</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-1">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              key={l.href}
+              href={l.href}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground px-4 py-2 rounded-lg hover:bg-muted/50 transition-all duration-200"
+            >
               {l.label}
             </a>
           ))}
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <button onClick={() => setDark(!dark)} className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground">
-            {dark ? <Sun size={18} /> : <Moon size={18} />}
+          <button
+            onClick={() => setDark(!dark)}
+            className="p-2.5 rounded-xl hover:bg-muted/50 transition-all duration-200 text-muted-foreground hover:text-foreground"
+          >
+            <motion.div
+              key={dark ? "sun" : "moon"}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {dark ? <Sun size={18} /> : <Moon size={18} />}
+            </motion.div>
           </button>
           <a href="#precos">
-            <Button className="gradient-primary text-primary-foreground font-semibold px-6 hover:opacity-90 transition-opacity">
+            <Button className="gradient-primary text-primary-foreground font-semibold px-6 hover:shadow-glow transition-all duration-300">
               Começar Agora
             </Button>
           </a>
@@ -65,27 +80,49 @@ const Navbar = () => {
             {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-foreground">
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={mobileOpen ? "close" : "open"}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.div>
+            </AnimatePresence>
           </button>
         </div>
       </div>
 
-      {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-card border-b border-border px-6 pb-6 pt-2 space-y-4"
-        >
-          {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-muted-foreground hover:text-foreground">
-              {l.label}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden glass-strong border-t border-border/50 px-6 pb-6 pt-2 space-y-4 overflow-hidden"
+          >
+            {links.map((l, i) => (
+              <motion.a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMobileOpen(false)}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="block text-sm font-medium text-muted-foreground hover:text-foreground py-2"
+              >
+                {l.label}
+              </motion.a>
+            ))}
+            <a href="#precos" onClick={() => setMobileOpen(false)}>
+              <Button className="w-full gradient-primary text-primary-foreground font-semibold">Começar Agora</Button>
             </a>
-          ))}
-          <a href="#precos" onClick={() => setMobileOpen(false)}>
-            <Button className="w-full gradient-primary text-primary-foreground font-semibold">Começar Agora</Button>
-          </a>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

@@ -13,9 +13,7 @@ const features = [
 
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
 const cardVariants = {
@@ -30,20 +28,31 @@ const cardVariants = {
 
 const Features = () => {
   return (
-    <section id="recursos" className="py-24">
-      <div className="container mx-auto">
+    <section id="recursos" className="py-28 relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full" />
+      
+      <div className="container mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block text-sm font-medium text-primary mb-4 px-4 py-1.5 rounded-full glass"
+          >
+            Recursos
+          </motion.span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
             Tudo que você precisa,{" "}
-            <span className="gradient-text">em um só lugar</span>
+            <span className="gradient-text text-glow">em um só lugar</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Ferramentas poderosas para gerenciar comunicação, vendas e atendimento de forma integrada.
           </p>
         </motion.div>
@@ -53,18 +62,18 @@ const Features = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
         >
           {features.map((f) => (
             <motion.div
               key={f.title}
               variants={cardVariants}
               whileHover={{ y: -8, transition: { duration: 0.25 } }}
-              className="group bg-card rounded-xl p-6 shadow-card hover:shadow-card-hover border border-border transition-colors duration-300"
+              className="group glass rounded-xl p-6 hover:border-glow transition-all duration-300"
             >
               <motion.div
-                whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
-                className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1, transition: { duration: 0.5 } }}
+                className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-5 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-glow transition-all duration-300"
               >
                 <f.icon size={22} />
               </motion.div>
