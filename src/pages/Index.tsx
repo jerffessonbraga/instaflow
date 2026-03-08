@@ -6,6 +6,7 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import Pricing from "@/components/landing/Pricing";
 import Testimonials from "@/components/landing/Testimonials";
 import CTASection from "@/components/landing/CTASection";
+import FAQ from "@/components/landing/FAQ";
 import Footer from "@/components/landing/Footer";
 import CursorGlow from "@/components/CursorGlow";
 
@@ -20,6 +21,7 @@ const Index = () => {
       <HowItWorks />
       <Pricing />
       <Testimonials />
+      <FAQ />
       <CTASection />
       <Footer />
     </div>
