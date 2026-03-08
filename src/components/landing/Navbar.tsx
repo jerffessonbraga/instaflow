@@ -116,7 +116,7 @@ const Navbar = () => {
                 {l.label}
               </motion.a>
             ))}
-            <a href="#checkout" onClick={() => setMobileOpen(false)}>
+            <a href="https://pay.kiwify.com.br/SEU_LINK" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}>
               <Button className="w-full gradient-cta-btn text-cta-foreground font-semibold">Começar Agora</Button>
             </a>
           </motion.div>
