@@ -22,24 +22,35 @@ const HowItWorks = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 relative">
+          {/* Connecting line */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+            className="hidden md:block absolute top-8 left-[20%] right-[20%] h-0.5 bg-border origin-left"
+          />
           {steps.map((s, i) => (
             <motion.div
               key={s.num}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              className="text-center"
+              transition={{ delay: i * 0.2, type: "spring", stiffness: 80 }}
+              className="text-center relative"
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl gradient-primary text-primary-foreground font-display font-bold text-xl mb-6">
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.2, type: "spring", stiffness: 200 }}
+                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl gradient-primary text-primary-foreground font-display font-bold text-xl mb-6 relative z-10"
+              >
                 {s.num}
-              </div>
+              </motion.div>
               <h3 className="font-display font-semibold text-xl mb-3 text-foreground">{s.title}</h3>
               <p className="text-muted-foreground max-w-xs mx-auto">{s.desc}</p>
-              {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-8 right-0 w-16 h-0.5 bg-border" />
-              )}
             </motion.div>
           ))}
         </div>

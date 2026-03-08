@@ -22,6 +22,21 @@ const testimonials = [
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, rotateX: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { type: "spring" as const, stiffness: 80, damping: 15 },
+  },
+};
+
 const Testimonials = () => {
   return (
     <section id="depoimentos" className="py-24 bg-muted/50">
@@ -38,19 +53,31 @@ const Testimonials = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {testimonials.map((t, i) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+        >
+          {testimonials.map((t) => (
             <motion.div
               key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
-              className="bg-card rounded-2xl p-6 shadow-card border border-border hover:shadow-card-hover transition-all duration-300"
+              variants={cardVariants}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="bg-card rounded-2xl p-6 shadow-card border border-border hover:shadow-card-hover transition-shadow duration-300"
             >
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, j) => (
-                  <Star key={j} size={16} className="fill-primary text-primary" />
+                  <motion.div
+                    key={j}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 + j * 0.08, type: "spring", stiffness: 200 }}
+                  >
+                    <Star size={16} className="fill-primary text-primary" />
+                  </motion.div>
                 ))}
               </div>
               <p className="text-sm text-muted-foreground mb-6 leading-relaxed">"{t.text}"</p>
@@ -65,7 +92,7 @@ const Testimonials = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
