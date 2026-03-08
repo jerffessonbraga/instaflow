@@ -29,6 +29,21 @@ const plans = [
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 80, damping: 15 },
+  },
+};
+
 const Pricing = () => {
   return (
     <section id="precos" className="py-24">
@@ -48,24 +63,34 @@ const Pricing = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, i) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-start"
+        >
+          {plans.map((plan) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
-              className={`relative bg-card rounded-2xl p-8 border transition-all duration-300 hover:-translate-y-1 ${
+              variants={cardVariants}
+              whileHover={{ y: -8, transition: { duration: 0.25 } }}
+              className={`relative bg-card rounded-2xl p-8 border transition-shadow duration-300 ${
                 plan.popular
-                  ? "border-primary shadow-card-hover scale-105"
+                  ? "border-primary shadow-card-hover md:scale-105"
                   : "border-border shadow-card hover:shadow-card-hover"
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full gradient-primary text-primary-foreground text-xs font-semibold">
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, type: "spring" }}
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full gradient-primary text-primary-foreground text-xs font-semibold"
+                >
                   Mais Popular
-                </div>
+                </motion.div>
               )}
               <h3 className="font-display font-bold text-xl mb-2 text-foreground">{plan.name}</h3>
               <p className="text-sm text-muted-foreground mb-4">{plan.desc}</p>
@@ -83,16 +108,23 @@ const Pricing = () => {
                 {plan.name === "Enterprise" ? "Falar com Vendas" : "Começar Agora"}
               </Button>
               <ul className="space-y-3">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
+                {plan.features.map((f, j) => (
+                  <motion.li
+                    key={f}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 + j * 0.05 }}
+                    className="flex items-center gap-2 text-sm text-muted-foreground"
+                  >
                     <Check size={16} className="text-primary flex-shrink-0" />
                     {f}
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
