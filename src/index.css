@@ -116,6 +116,9 @@
   .gradient-cta {
     background: var(--gradient-cta);
   }
+  .gradient-cta-btn {
+    background: var(--gradient-cta-btn);
+  }
   .gradient-text {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
