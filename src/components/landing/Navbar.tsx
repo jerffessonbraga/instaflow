@@ -67,8 +67,8 @@ const Navbar = () => {
               {dark ? <Sun size={18} /> : <Moon size={18} />}
             </motion.div>
           </button>
-          <a href="#precos">
-            <Button className="gradient-primary text-primary-foreground font-semibold px-6 hover:shadow-glow transition-all duration-300">
+          <a href="#checkout">
+            <Button className="gradient-cta-btn text-cta-foreground font-semibold px-6 hover:shadow-[0_0_40px_-8px_hsl(var(--cta)/0.5)] transition-all duration-300">
               Começar Agora
             </Button>
           </a>
